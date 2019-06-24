@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html style="height: 100%;">
+	<head>
+		<meta charset="utf-8" />
+		<title>地图</title>
+		<link href="./js/baidumapv2/css/baidu_map_v2.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body style="height:100%;margin:0 auto">
+		<div style="position: absolute;z-index:2;">
+			<input type="text" id="value" /><button onclick="select()">查询</button>
+		</div>
+		<div id="map_demo" style="height: 100%;width: 100%;"></div>
+		<script src="./js/jquery.min.js"></script>
+		<script src="./js/baidumapv2/baidumap_offline_v2_load.js"></script>
+		<script>
+			// 首页点位图和热力图
+			var map = new BMap.Map("map_demo",{minZoom:10,maxZoom:19});    // 创建Map实例
+			var point = new BMap.Point(115.877449,28.686096);
+			map.centerAndZoom(point, 14);
+			map.enableScrollWheelZoom();       //启用滚轮放大缩小
+			map.disableDoubleClickZoom(); 
+			
+			var marker = new BMap.Marker(point);  // 创建标注
+			map.addOverlay(marker);               // 将标注添加到地图中
+			marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+			
+			function select(){
+				var  key=$("#value").val();
+				console.log(key);
+				if(key){
+					var point=new BMap.Point(key.split(",")[0],key.split(",")[1]);
+					map.setCenter(point);
+					var marker = new BMap.Marker(point);  // 创建标注
+					map.addOverlay(marker);               // 将标注添加到地图中
+					marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+				}
+				
+				
+			}
+		</script>
+	</body>
+	
+</html>
